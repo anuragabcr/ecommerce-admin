@@ -19,8 +19,6 @@ import {
 } from "./ui/form";
 import { Input } from "./ui/input";
 import AlertModal from "./modals/AlertModal";
-import ApiAlert from "./ApiAlert";
-import UseOrigin from "@/hooks/UseOrigin";
 import Heading from "./Heading";
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
@@ -40,7 +38,6 @@ const BillboardForm = ({ initialData }: BillboardFormProps) => {
   const [loading, setLoading] = useState(false);
   const params = useParams();
   const router = useRouter();
-  const origin = UseOrigin();
 
   const title = initialData ? "Edit Billboard" : "Create Billboard";
   const description = initialData
@@ -88,7 +85,7 @@ const BillboardForm = ({ initialData }: BillboardFormProps) => {
         `/api/${params.storeId}/billboards/${params.billboardId}`
       );
       router.refresh();
-      router.push("/");
+      router.push(`/${params.storeId}/billboards`);
       toast.success("Billboard deleted");
     } catch (error) {
       toast.error(
@@ -172,11 +169,6 @@ const BillboardForm = ({ initialData }: BillboardFormProps) => {
         </form>
       </Form>
       <Separator />
-      <ApiAlert
-        title="NEXT_PUBLIC_API_URL"
-        description={`${origin}/api/${params.storeId}`}
-        variant="public"
-      />
     </>
   );
 };
